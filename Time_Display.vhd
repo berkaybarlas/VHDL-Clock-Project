@@ -61,79 +61,42 @@ PROCESS_SCLK : PROCESS(SCLK, RST)
 BEGIN
 --Main Clock Code
 if(rising_edge(SCLK))then
-  if(SET = '0' or stop = '0') then
-   if(s < "1011") then
-    s <= s + 1;
-    if(s = "1001") then
-     s<="0000";
-     s1 <= s1 + 1;
-     if(s1 = "0101") then
-      m <= m + 1;
-      s1 <= "0000";
-      if(m = "1001") then
-       m <= "0000";
-       m1 <= m1 + 1;
-       if(m1 = "0101") then
-        m1 <= "0000";
-        h <= h + 1 ;
-        if(h = "1001" ) then
-         h <= "0000";
-         h1 <= h1 + 1;
-         if(h1if(rising_edge(SCLK))then
-  if(SET = '0' or stop = '0') then
-   if(s < "1011") then
-    s <= s + 1;
-    if(s = "1001") then
-     s<="0000";
-     s1 <= s1 + 1;
-     if(s1 = "0101") then
-      m <= m + 1;
-      s1 <= "0000";
-      if(m = "1001") then
-       m <= "0000";
-       m1 <= m1 + 1;
-       if(m1 = "0101") then
-        m1 <= "0000";
-        h <= h + 1 ;
-	if(h = "1001" ) then
-		h <= "0000";
-		h1 <= h1 + 1;
-	elsif(h1 > "0001" and h > "0010" ) then
-		h1 <= "0000";
-		h <= "0000";
- 
-         end if;
-        end if;
-       end if;
-      end if;
-     end if;
-    end if;
-   end if;
-   elsif(SET = '1') then
-   m<=r5 ;
-   m1<=r6 ;
-   h<=r7 ;
-   h1<=r8 ;
-    
-   end if;
-end if; = "0010" and h = "0100" ) then
-          h1 <= "0000";
-          h <= "0000";
- 
-         end if;
-        end if;
-       end if;
-      end if;
-     end if;
-    end if;
-   end if;
-   elsif(SET = '1') then
-   m<=r5 ;
-   m1<=r6 ;
-   h<=r7 ;
-   h1<=r8 ;
-    
-   end if;
+		if(SET = '0' and stop = '0') then 
+			if(s < "1011") then
+				s <= s + 1;
+				if(s = "1001") then
+					s<="0000";
+					s1 <= s1 + 1;
+					if(s1 = "0101") then
+						m <= m + 1;
+						s1 <= "0000";
+						if(m = "1001") then
+							m <= "0000";
+							m1 <= m1 + 1;
+							if(m1 =  "0101") then
+								m1 <= "0000";
+								h <= h + 1 ;
+								if(h = "1001" ) then
+									h <= "0000";
+									h1 <= h1 + 1;
+								elsif(h1 > "0001" and h > "0010" ) then
+									h1 <= "0000";
+									h <= "0000";
+
+															
+								end if;
+							end if;
+						end if;
+					end if;
+				end if;
+			end if;
+			elsif(SET = '1') then
+			m<=r5 ;
+			m1<=r6 ;
+			h<=r7 ;
+			h1<=r8 ;
+			
+			end if;
 end if;
 --Reset Clock
 IF RST = '1' THEN
@@ -157,7 +120,7 @@ if (mode_select = 0 and SET = '0') then
   
 end if;
  
---when mode_select 0 show cloc
+--when mode_select 0 show clock
 --when mode_select 1 set clock
 
  
@@ -174,7 +137,7 @@ if mode_select = 0 then
    SET <= '0' ;
 end if;
  
--- Set Current Mode
+-- Set the Digit that will change in CLOCK SET Mode
 if (mode_select /= 0 and mode = '1') then
     
    if (SET_SELECT = "00" and rising_edge(PLUSONE)) then
@@ -205,7 +168,7 @@ if (mode_select /= 0 and mode = '1') then
   end if;
  
  
--- Clock
+-- Showing Current Mode : Clock
 if (mode_select = 1) then
   r4 <="1011"; --C
   r3 <="1101"; --l
@@ -215,8 +178,7 @@ end if;
  
  
 END Process;
-
-  
+	
  Time_Display<= "0000";
   digitone <=r1 ;
   digittwo <=r2;
